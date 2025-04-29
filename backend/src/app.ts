@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import authRoutes from './routes/auth.routes';
 import session from 'express-session';
+import cors from 'cors'
 
 dotenv.config();
 
@@ -14,6 +15,11 @@ const pool = new Pool({
         rejectUnauthorized: false,
     },
 });
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}))
 
 app.use(express.json());
 
@@ -36,30 +42,28 @@ app.use(
 
 app.use('/api/auth', authRoutes);
 
-app.get('/api/test-db', async (req, res) => {
-    const result = await pool.query('SELECT NOW()');
-    res.json({ time: result.rows[0] });
-});
-
 app.get('/', (req, res) => {
+    console.log('GET / was called');
     res.send('Hello World!');
 });
 
 const startServer = async () => {
+    console.log("🔁 Attempting to start server...");
     try {
         await pool.query('SELECT NOW()');
         console.log('✅ Connected to the database successfully');
 
-        const PORT = process.env.PORT || 5173;
+        const PORT = process.env.PORT || 5000;
         app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
+            console.log(`🚀 Server running on http://localhost:${PORT}`);
         });
 
     } catch (err: any) {
-        console.error('Failed to connect to the database:', err.message || err);
+        console.error('❌ Failed to connect to the database:', err.message || err);
         process.exit(1);
     }
 };
+
 
 startServer();
 
