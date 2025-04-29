@@ -12,7 +12,10 @@ function Login() {
         try {
             const response = await api.post('/auth/login', { email, password });
             console.log('Login successful', response.data);
-            navigate('/dashboard'); // redirect to dashboard
+
+            const me = await api.get('/auth/me');
+            console.log('Session confirmed:', me.data);
+            navigate('/dashboard');
         } catch (error) {
             console.error('Login failed', error);
             alert('Login failed. Check email or password.');
