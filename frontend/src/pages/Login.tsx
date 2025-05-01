@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
-function Login() {
+interface LoginProps {
+    setUser: React.Dispatch<React.SetStateAction<{
+        id: string;
+        email: string;
+        role?: string;
+    } | null>>;
+}
+
+const Login: React.FC<LoginProps> = ({ setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -10,52 +18,36 @@ function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const loginRes = await api.post('/auth/login', {
-                email,
-                password,
-            });
-
-            console.log('Login successful', loginRes.data);
-
+            await api.post('/auth/login', { email, password });
             const res = await api.get('/auth/me');
-            const user = res.data.user;
-
-            console.log('Authenticated user:', user);
+            setUser(res.data.user);
             navigate('/dashboard');
-
         } catch (err: any) {
             console.error('Login failed', err);
+            alert('Invalid credentials or network error.');
         }
     };
 
     return (
-        <div style={{ padding: '2rem' }}>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label><br />
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div style={{ marginTop: '1rem' }}>
-                    <label>Password:</label><br />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" style={{ marginTop: '1rem' }}>
-                    Login
-                </button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+            /><br />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            /><br />
+            <button type="submit">Login</button>
+        </form>
     );
-}
+};
 
 export default Login;

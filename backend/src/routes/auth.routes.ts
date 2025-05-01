@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/login', login);
 router.post('/register', register);
+
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) return res.status(500).json({ message: 'Logout failed' });
@@ -13,6 +14,7 @@ router.post('/logout', (req, res) => {
         res.status(200).json({ message: 'Logged out' });
     });
 });
+
 router.get('/me', isAuthenticated, (req, res) => {
     res.status(200).json({ user: req.session.user });
 });

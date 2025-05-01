@@ -1,28 +1,20 @@
-import { useNavigate } from 'react-router-dom'
-import api from '../services/api'
+import React from 'react';
 
-function Dashboard() {
-    const navigate = useNavigate()
+interface DashboardProps {
+    user: {
+        id: string;
+        email: string;
+        role?: string;
+    } | null;
+}
 
-    const handleLogout = async () => {
-        try {
-            await api.post('/auth/logout')
-            console.log('Logout Successful')
-            navigate('/login')
-        } catch (error) {
-            console.log('Logout Failed', error)
-            alert('Logout Failed. Try Again.')
-        }
-    }
-
+const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     return (
-        <div style={{ padding: '2rem' }}>
-            <h1>Welcome to the Dashboard!</h1>
-            <button onClick={handleLogout} style={{ marginTop: '2rem' }}>
-                Logout
-            </button>
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome, {user?.email}</p>
         </div>
     );
-}
+};
 
 export default Dashboard;
