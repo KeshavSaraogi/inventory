@@ -10,15 +10,21 @@ function Login() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await api.post('/auth/login', { email, password });
-            console.log('Login successful', response.data);
+            const loginRes = await api.post('/auth/login', {
+                email,
+                password,
+            });
 
-            const me = await api.get('/auth/me');
-            console.log('Session confirmed:', me.data);
+            console.log('Login successful', loginRes.data);
+
+            const res = await api.get('/auth/me');
+            const user = res.data.user;
+
+            console.log('Authenticated user:', user);
             navigate('/dashboard');
-        } catch (error) {
-            console.error('Login failed', error);
-            alert('Login failed. Check email or password.');
+
+        } catch (err: any) {
+            console.error('Login failed', err);
         }
     };
 
