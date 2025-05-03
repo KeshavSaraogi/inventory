@@ -20,8 +20,8 @@ export const createProduct = async (
 ) => {
     const res = await pool.query(
         `INSERT INTO products (name, sku, unit, quantity_in_stock, low_stock_threshold, description)
-     VALUES ($1, $2, $3, $4, $5, $6)
-     RETURNING *`,
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *`,
         [name, sku, unit, quantity, threshold, description]
     );
     return res.rows[0];
