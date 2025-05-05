@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import AddProductPage from './pages/AddProduct';
 import api from './services/api';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
 
         <Route element={<PrivateRoute user={user} />}>
           <Route path="/dashboard" element={<Dashboard user={user} />} />
+          <Route path="/add-product" element={<AddProductPage />} />
         </Route>
       </Routes>
     </Router>

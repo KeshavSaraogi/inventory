@@ -1,11 +1,15 @@
-// src/routes/productRoutes.ts
 import express from 'express';
-import { fetchProducts, addProduct } from '../controllers/productController';
-import { isAdmin } from '../middleware/isAdmin';
+import {
+    fetchProducts, fetchProduct, addProduct,
+    modifyProduct, removeProduct,
+} from '../controllers/product.controller';
 
 const router = express.Router();
 
-router.get('/', isAdmin, fetchProducts);
-router.post('/', isAdmin, addProduct);
+router.get('/', fetchProducts);
+//router.get('/:id', fetchProduct);
+router.post('/', addProduct);
+router.put('/:id', modifyProduct);
+router.delete('/:id', removeProduct);
 
 export default router;

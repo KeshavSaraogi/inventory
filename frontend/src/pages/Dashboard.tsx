@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import ProductsPage from './Product'
 
 interface DashboardProps {
     user: {
@@ -27,8 +28,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <div>
             <h1>Dashboard</h1>
             <p>Welcome, {user?.email}</p>
-            <button onClick={handleLogout}>
-                Logout
+            <button onClick={handleLogout}>Logout</button>
+            <hr />
+            <button onClick={() => navigate('/add-product')}>
+                Add Product
             </button>
         </div>
     );

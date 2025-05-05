@@ -1,25 +1,19 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { Pool } from 'pg';
-import authRoutes from './routes/auth.routes';
 import session from 'express-session';
-import cors from 'cors'
+import cors from 'cors';
+import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/product.routes';
+import pool from '../src/db'
 
 dotenv.config();
 
 const app = express();
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
-});
-
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
-}))
+}));
 
 app.use(express.json());
 
@@ -41,6 +35,7 @@ app.use(
 );
 
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 app.get('/', (req, res) => {
     console.log('GET / was called');
@@ -63,7 +58,6 @@ const startServer = async () => {
         process.exit(1);
     }
 };
-
 
 startServer();
 
