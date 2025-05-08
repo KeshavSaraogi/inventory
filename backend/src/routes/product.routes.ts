@@ -1,7 +1,10 @@
 import express from 'express';
 import {
-    fetchProducts, fetchProduct, addProduct,
-    modifyProduct, removeProduct,
+    fetchProducts,
+    fetchProduct,
+    addProduct,
+    modifyProduct,
+    removeProduct,
 } from '../controllers/product.controller';
 
 const router = express.Router();
