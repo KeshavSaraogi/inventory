@@ -5,6 +5,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import pool from '../src/db'
+import dashboardRoutes from './routes/dashboard.routes';
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use(
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.get('/', (req, res) => {
     console.log('GET / was called');
