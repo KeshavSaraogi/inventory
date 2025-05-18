@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import '../styles/login.css';
 
 interface LoginProps {
     setUser: React.Dispatch<React.SetStateAction<{
@@ -29,24 +30,64 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            /><br />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            /><br />
-            <button type="submit">Login</button>
-        </form>
+        <div className="login-container">
+            <div className="login-card">
+                <div className="login-left">
+                    {/* Add your logo image below or use text */}
+                    <img src="/logo.png" alt="Logo" />
+                </div>
+                <div className="login-right">
+                    <h2 className="login-title">Log in to your account</h2>
+                    <p className="login-subtitle">Welcome back! Please enter your details.</p>
+
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <div>
+                            <label className="login-label" htmlFor="email">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label className="login-label" htmlFor="password">Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="login-checkbox">
+                            <label>
+                                <input type="checkbox" /> Remember for 30 days
+                            </label>
+                            <a href="#" style={{ color: "#2563eb", textDecoration: "underline" }}>Forgot password</a>
+                        </div>
+
+                        <div className="login-actions">
+                            <button type="submit" className="w-full">Sign in</button>
+                            <button type="button" className="w-full" style={{ backgroundColor: "#fff", border: "1px solid #e5e7eb" }}>
+                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style={{ width: 16, marginRight: 8 }} />
+                                Sign in with Google
+                            </button>
+                        </div>
+
+                        <p className="login-link-text">
+                            Don’t have an account?
+                            <a href="/signup" className="login-link"> Sign up</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 };
 
